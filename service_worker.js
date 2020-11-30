@@ -4,7 +4,7 @@ var urlsToCache = ["/runstackjp.github.io/"];
 
 // インストール処理
 self.addEventListener("install", function (event) {
-  console.log("sw install");
+  console.log("ServiceWorker install");
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(urlsToCache);
@@ -25,7 +25,7 @@ self.addEventListener("install", function (event) {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
-  console.log("sw fetch");
+  console.log("fetch handring");
   // 検索(オフライン対応)のリクエストの場合
   if (event.request.url.indexOf("https://httpbin.org") != -1) {
     /* レスポンス編集
@@ -34,27 +34,27 @@ self.addEventListener("fetch", function (event) {
      * 2.キャッシュデータ
      * 3.ブラウザDBから検索したデータ
      */
-    console.log("sw if in");
     event.respondWith(
       // １．ネットワークリクエスト実行
       fetch(event.request)
       
         // ２．ネットワークリクエストが成功した場合
       .then(response => {
+        console.log("fetch response return");
         return response;
         })
         // ３．ネットワークリクエストが失敗した場合
         .catch(function (error) {
-          console.log("sw fetch error");
+          console.log("fetch error handring");
           // キャッシュにデータがあるかチェック
           caches.match(event.request).then(function (response) {
             // データあり
             if (response) {
-              console.log("sw キャッシュあり");
+              console.log("fetch caches.match キャッシュあり response return");
               // キャッシュのデータを返す
               return response;
             } else {
-              console.log("sw キャッシュなし");
+              console.log("fetch caches.match キャッシュなし!!! new response return");
               // データなし
 
               // ブラウザDBからデータを検索してレスポンスを作成
@@ -65,7 +65,7 @@ self.addEventListener("fetch", function (event) {
         })
     );
   } else {
-    console.log("sw else in");
+    console.log("fetch handring not httpbin.org");
     // その他のリクエストの場合
     // ※このサンプルだと画面にアクセスした時のリクエストが該当する
     event.respondWith(
