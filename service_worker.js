@@ -47,7 +47,7 @@ self.addEventListener("fetch", function (event) {
         // ３．ネットワークリクエストが失敗した場合
         .catch(function (error) {
           // キャッシュにデータがあるかチェック
-          caches.match(event.request).then(function (response) {
+          return caches.match(event.request).then(function (response) {
             // データあり
             if (response) {
               console.log("fetch caches.match キャッシュあり response return");
@@ -62,9 +62,6 @@ self.addEventListener("fetch", function (event) {
               return myResponse;
             }
           });
-          // caches.matchのthenで処理するので、とりあえずreturn
-          console.log("fetch error handring wkResponse return");
-          return wkResponse;
         })
     );
   } else {
