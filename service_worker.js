@@ -29,6 +29,8 @@ self.addEventListener("fetch", function (event) {
   // 検索(オフライン対応)のリクエストの場合
   if (event.request.url.indexOf("https://httpbin.org") != -1) {
     console.log("fetch if");
+    var init = { "status" : 299 , "statusText" : "SuperSmashingGreat!" };
+    var wkResponse = new Response(null,init);
     /* レスポンス編集
      * 以下の優先度でデータを返す。
      * 1.ネットワークリクエストデータ
@@ -46,7 +48,6 @@ self.addEventListener("fetch", function (event) {
         })
         // ３．ネットワークリクエストが失敗した場合
         .catch(function (error) {
-          console.log("fetch error handring");
           // キャッシュにデータがあるかチェック
           caches.match(event.request).then(function (response) {
             // データあり
@@ -58,14 +59,14 @@ self.addEventListener("fetch", function (event) {
               console.log("fetch caches.match キャッシュなし!!! new response return");
               // データなし
               // ブラウザDBからデータを検索してレスポンスを作成
-              var myBlob = new Blob();
               var init = { "status" : 201 , "statusText" : "SuperSmashingGreat!" };
-              var myResponse = new Response(myBlob,init);
+              var myResponse = new Response(null,init);
               return myResponse;
             }
           });
           // caches.matchのthenで処理するので、とりあえずreturn
-          return;
+          console.log("fetch error handring wkResponse return");
+          return wkResponse;
         })
     );
   } else {
