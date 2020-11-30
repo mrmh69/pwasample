@@ -17,7 +17,7 @@
         // テーブルクリア
         $("#table_body").empty();
         // 入力条件を元にブラウザDBから検索（完全一致検索）
-        paramSearch(renderAll);
+        getAll(renderAll);
         $("#span3").text(`3:${response.status}`);
         return;
       } else {
