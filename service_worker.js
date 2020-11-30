@@ -1,6 +1,6 @@
 // キャッシュファイルの指定
 var CACHE_NAME = "pwa-sample-caches";
-var urlsToCache = ["/mahayash2020.github.io/"];
+var urlsToCache = ["/runstackjp.github.io/"];
 
 // インストール処理
 self.addEventListener("install", function (event) {
