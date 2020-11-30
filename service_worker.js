@@ -25,9 +25,10 @@ self.addEventListener("install", function (event) {
 
 // リソースフェッチ時のキャッシュロード処理
 self.addEventListener("fetch", function (event) {
-  console.log("fetch handring");
+  console.log("fetch");
   // 検索(オフライン対応)のリクエストの場合
   if (event.request.url.indexOf("https://httpbin.org") != -1) {
+    console.log("fetch if");
     /* レスポンス編集
      * 以下の優先度でデータを返す。
      * 1.ネットワークリクエストデータ
@@ -65,12 +66,12 @@ self.addEventListener("fetch", function (event) {
         })
     );
   } else {
-    console.log("fetch handring not httpbin.org");
     // その他のリクエストの場合
     // ※このサンプルだと画面にアクセスした時のリクエストが該当する
     event.respondWith(
       // キャッシュにリクエストがあればキャッシュからレスポンスを返す。無い場合は、ネットワークからレスポンスを取得して返す。
       caches.match(event.request).then(function (response) {
+        console.log("fetch else. return cacheResponse or fetch(event.request);");
         return response ? response : fetch(event.request);
       })
     );
