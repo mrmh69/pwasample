@@ -9,7 +9,7 @@ var count = 0;
 
 // DB名とバージョン
 var dbName = "sampleDB";
-var dbVersion = "1";
+var dbVersion = "1";ß
 // オブジェクトストアの名前
 var storeName = "customer";
 
@@ -70,6 +70,12 @@ openReq.onsuccess = function (event) {
     $("#table_body").empty();
     // 条件指定で取得して画面に反映
     paramSearch(renderAll);
+    // ログエリア初期化
+    $("#span1").text("");
+    $("#span2").text("");
+    $("#span3").text("");
+    $("#span4").text("");
+    $("#span5").text("");
   });
 
   // 登録ボタン押下時処理

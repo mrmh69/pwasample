@@ -29,29 +29,25 @@ self.addEventListener("fetch", function (event) {
   // 検索(オフライン対応)のリクエストの場合
   if (event.request.url.indexOf("https://httpbin.org") != -1) {
     console.log("fetch if");
-    var init = { "status" : 299 , "statusText" : "SuperSmashingGreat!" };
-    var wkResponse = new Response(null,init);
-    var init2 = { "status" : 201 , "statusText" : "SuperSmashingGreat!" };
-    var myResponse = new Response(null,init2);
-/* レスポンス編集
-     * 以下の優先度でデータを返す。
-     * 1.ネットワークリクエストデータ
-     * 2.キャッシュデータ
-     * 3.ブラウザDBから検索したデータ
-     */
+    /* レスポンス編集
+         * 以下の優先度でデータを返す。
+         * 1.ネットワークリクエストデータ
+         * 2.キャッシュデータ
+         * 3.ブラウザDBから検索したデータ
+         */
     event.respondWith(
       // １．ネットワークリクエスト実行
       fetch(event.request)
-      
+
         // ２．ネットワークリクエストが成功した場合
-      .then(response => {
-        console.log("fetch response return");
-        return response;
+        .then(response => {
+          console.log("fetch response return");
+          return response;
         })
         // ３．ネットワークリクエストが失敗した場合
         .catch(function (error) {
           // キャッシュにデータがあるかチェック
-          caches.match(event.request).then(function (response) {
+          scaches.match(event.request).then(function (response) {
             // データあり
             if (response) {
               console.log("fetch caches.match キャッシュあり response return");
@@ -60,7 +56,9 @@ self.addEventListener("fetch", function (event) {
             } else {
               console.log("fetch caches.match キャッシュなし!!! new response return");
               // データなし
-              // ブラウザDBからデータを検索してレスポンスを作成
+              var init = { "status": 201, "statusText": "SuperSmashingGreat!" };
+              var myResponse = new Response(null, init);
+              // ステータス201で返す
               return myResponse;
             }
           });
