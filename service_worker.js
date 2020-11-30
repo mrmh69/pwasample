@@ -57,12 +57,15 @@ self.addEventListener("fetch", function (event) {
             } else {
               console.log("fetch caches.match キャッシュなし!!! new response return");
               // データなし
-
               // ブラウザDBからデータを検索してレスポンスを作成
-              var init = { status: 201, statusText: "SuperSmashingGreat!" };
-              return new Response(new Blob(),init);
+              var myBlob = new Blob();
+              var init = { "status" : 201 , "statusText" : "SuperSmashingGreat!" };
+              var myResponse = new Response(myBlob,init);
+              return myResponse;
             }
           });
+          // caches.matchのthenで処理するので、とりあえずreturn
+          return;
         })
     );
   } else {
