@@ -42,7 +42,11 @@ self.addEventListener("fetch", function (event) {
         // ２．ネットワークリクエストが成功した場合
         .then(response => {
           console.log("fetch response return");
-          return response;
+          // キャッシュに追加
+          return caches.open("CACHE_NAME").then(function (cache) {
+            cache.put(event.request, response.clone());
+            return response;
+          })
         })
         // ３．ネットワークリクエストが失敗した場合
         .catch(function (error) {
