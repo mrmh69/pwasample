@@ -47,7 +47,7 @@ self.addEventListener("fetch", function (event) {
         // ３．ネットワークリクエストが失敗した場合
         .catch(function (error) {
           // キャッシュにデータがあるかチェック
-          scaches.match(event.request).then(function (response) {
+          caches.match(event.request).then(function (response) {
             // データあり
             if (response) {
               console.log("fetch caches.match キャッシュあり response return");
