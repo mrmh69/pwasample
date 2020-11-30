@@ -31,7 +31,9 @@ self.addEventListener("fetch", function (event) {
     console.log("fetch if");
     var init = { "status" : 299 , "statusText" : "SuperSmashingGreat!" };
     var wkResponse = new Response(null,init);
-    /* レスポンス編集
+    var init2 = { "status" : 201 , "statusText" : "SuperSmashingGreat!" };
+    var myResponse = new Response(null,init2);
+/* レスポンス編集
      * 以下の優先度でデータを返す。
      * 1.ネットワークリクエストデータ
      * 2.キャッシュデータ
@@ -59,8 +61,6 @@ self.addEventListener("fetch", function (event) {
               console.log("fetch caches.match キャッシュなし!!! new response return");
               // データなし
               // ブラウザDBからデータを検索してレスポンスを作成
-              var init = { "status" : 201 , "statusText" : "SuperSmashingGreat!" };
-              var myResponse = new Response(null,init);
               return myResponse;
             }
           });
