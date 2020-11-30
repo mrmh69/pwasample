@@ -9,7 +9,7 @@ var count = 0;
 
 // DB名とバージョン
 var dbName = "sampleDB";
-var dbVersion = "1";ß
+var dbVersion = "1";
 // オブジェクトストアの名前
 var storeName = "customer";
 
